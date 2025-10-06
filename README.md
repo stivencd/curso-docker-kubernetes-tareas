@@ -7,7 +7,7 @@ Repositorio de tareas del curso **Docker & Kubernetes**.
 
 ## Indice del curso
 1. **[Introducción a containers (contenedores) y Docker](https://github.com/stivencd/curso-docker-kubernetes-tareas/blob/main/clase1/README.md)**
-2. **[Manejo de images (imágenes), containers (contenedores) y networks (redes)](https://iquattrogroup.com/mod/url/view.php?id=1254)**
+2. **[Manejo de images (imágenes), containers (contenedores) y networks (redes)](https://github.com/stivencd/curso-docker-kubernetes-tareas/blob/main/clase2/README.md)**
 3. Docker avanzado y Docker Compose
 4. Seguridad en imágenes y escaneo de vulnerabilidades
 5. Arquitectura de Kubernetes
