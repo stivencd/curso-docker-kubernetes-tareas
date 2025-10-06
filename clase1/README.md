@@ -1,6 +1,6 @@
 # 🐳 Tarea 1 - Curso Docker & Kubernetes
 
-## Parte 2: Desafío Técnico con Docker
+## Desafío Técnico con Docker
 
 Explora diferentes aplicaciones desplegadas con Docker.
 
