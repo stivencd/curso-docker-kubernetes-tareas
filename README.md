@@ -6,7 +6,7 @@ Repositorio de tareas del curso **Docker & Kubernetes**.
 **Enlace:** [Curso Docker & Kubernetes](https://www.i-quattro.com/product-page/dok-kub-001)
 
 ## Indice del curso
-1. **[Introducción a containers (contenedores) y Docker](https://iquattrogroup.com/mod/url/view.php?id=1251)**
+1. **[Introducción a containers (contenedores) y Docker](https://github.com/stivencd/curso-docker-kubernetes-tareas/blob/main/clase1/README.md)**
 2. **[Manejo de images (imágenes), containers (contenedores) y networks (redes)](https://iquattrogroup.com/mod/url/view.php?id=1254)**
 3. Docker avanzado y Docker Compose
 4. Seguridad en imágenes y escaneo de vulnerabilidades
