@@ -1,0 +1,31 @@
+# Use Python slim image
+FROM python:3.12-alpine
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    APP_PORT=8000
+
+# Create a non-root user
+RUN addgroup -g 1001 -S python && adduser -S python -u 1001
+
+# Set workdir
+WORKDIR /app
+
+# Copy requirements first to leverage Docker cache
+COPY requirements.txt .
+
+# Install dependencies
+RUN python -m venv /opt/venv && /opt/venv/bin/pip install --no-cache-dir -r requirements.txt
+
+# Copy app code
+RUN chown -R python:python /app
+
+# Switch to non-root user
+USER python
+
+# Expose port
+EXPOSE ${APP_PORT}
+
+# Run Gunicorn with shell form for environment variable support
+CMD gunicorn --bind 0.0.0.0:${APP_PORT} run:app

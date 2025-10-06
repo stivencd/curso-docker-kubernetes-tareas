@@ -1,0 +1,11 @@
+# IDE / Editor files
+.vscode/
+
+# Go build artifacts
+bin/
+build/
+dist/
+
+# Test binaries
+*.cover
+*.test

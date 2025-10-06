@@ -1,0 +1,23 @@
+# Use the official Go image
+FROM golang:1.25.1-alpine
+
+# Set working directory inside container
+WORKDIR /app
+
+# Copy all files from current directory to /app
+COPY . .
+
+# Download dependencies
+RUN go mod download
+
+# Build the Go binary
+RUN go build -o server ./cmd/server
+
+# Expose the app port (change if needed)
+EXPOSE 8080
+
+# Set environment variables
+ENV APP_PORT=8080
+
+# Run the compiled binary
+CMD ["./server"]
