@@ -58,7 +58,7 @@ Base de datos: Postgres
 https://github.com/stivencd/curso-docker-kubernetes-tareas.git
 
 # Ir al proyecto
-cd clase4
+cd clase4/mi-microservicio
 
 # Levantar servicios
 docker compose up -d
