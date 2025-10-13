@@ -1,0 +1,26 @@
+<mat-card *ngIf="cartItems.length > 0">
+    <mat-card-header>
+      <mat-card-title>Your Cart</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item *ngFor="let item of cartItems">
+          <span>{{ item.product.name }} x {{ item.quantity }} = {{ item.price * item.quantity | currency }}</span>
+          <button mat-icon-button (click)="removeItem(item.product.productId)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+    <mat-card-footer>
+      <div>Total: {{ total | currency }}</div>
+      <button mat-raised-button color="primary" (click)="clearCart()">Clear Cart</button>
+    </mat-card-footer>
+  </mat-card>
+  
+  <mat-card *ngIf="cartItems.length === 0">
+    <mat-card-header>
+      <mat-card-title>Your Cart is Empty</mat-card-title>
+    </mat-card-header>
+  </mat-card>
+  

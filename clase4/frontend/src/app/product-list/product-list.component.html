@@ -1,0 +1,36 @@
+<div class="product-list">
+    <div class="product-card-container">
+        <mat-card class="product-card" *ngFor="let product of products">
+            <mat-card-header>
+                <mat-card-title>{{ product.name }}</mat-card-title>
+            </mat-card-header>
+
+            <img mat-card-image [src]="product.imageUrl" alt="{{ product.name }}" />
+
+            <mat-card-content>
+                <p>{{ product.description }}</p>
+                <p><strong>Price:</strong> {{ product.price | currency }}</p>
+
+                <!-- Quantity Adjust Section -->
+                <div class="quantity-selector">
+                    <button mat-icon-button (click)="decreaseQuantity(product)" [disabled]="product.quantity <= 1">
+                        <mat-icon>remove</mat-icon>
+                    </button>
+                    <span>{{ product.quantity }}</span>
+                    <button mat-icon-button (click)="increaseQuantity(product)"
+                        [disabled]="product.quantity >= product.stock">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+
+                <p><strong>Stock:</strong> {{ product.stock }}</p>
+            </mat-card-content>
+
+            <mat-card-actions>
+                <button mat-raised-button color="primary" (click)="addToCart(product)">
+                    Add to Cart
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

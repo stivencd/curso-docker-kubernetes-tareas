@@ -1,0 +1,74 @@
+version: '3.0'
+
+services:
+
+  # nginx:
+  #   image: nginx:latest
+  #   container_name: nginx
+  #   ports:
+  #     - "80:80"
+  #   volumes:
+  #     - ./gateway/nginx.conf:/etc/nginx/nginx.conf
+  #   depends_on:
+  #     - backend
+  #     - frontend
+  #   networks:
+  #     - app-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - app-network
+    restart: always
+    
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend
+    ports: 
+      - "3000:3000"
+    networks:
+      - app-network
+    environment:
+      - APP_PORT=3000
+      - NODE_ENV=production
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password123
+      - POSTGRES_DB=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_HOST=database
+    restart:  unless-stopped
+    depends_on:
+      database:
+        condition: service_healthy
+
+  database:
+    image: postgres:14.1-alpine
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password123
+    ports:
+      - 5432:5432
+    networks:
+      - app-network
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./database:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  db_data:
+networks:
+  app-network:
+    driver: bridge

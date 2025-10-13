@@ -1,0 +1,16 @@
+<mat-toolbar color="primary" *ngIf="user">
+    <span>Carrito de compra</span>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
+    <button mat-button routerLink="/cart">Ir al carrito</button>
+   <mat-icon matBadge="{{ cartItemCount }}" matBadgeColor="accent" matBadgePosition="above after" [routerLink]="'/cart'">
+    shopping_cart
+  </mat-icon>
+
+
+  </mat-toolbar>
+  
+  <router-outlet></router-outlet>
+  
