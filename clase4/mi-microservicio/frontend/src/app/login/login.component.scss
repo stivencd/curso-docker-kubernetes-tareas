@@ -1,0 +1,73 @@
+/* login.component.css */
+
+/* Center the card on the page */
+.login-card {
+    width: 100%;
+    max-width: 400px;
+    margin: 50px auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Header Styling */
+  .login-header {
+    background-color: #6200ea;
+    color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 1px;
+  }
+  
+  /* Form Fields Styling */
+  .form-field {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  /* Submit Button Styling */
+  .submit-button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px;
+    font-size: 16px;
+  }
+  
+  /* Forgot Password Link Styling */
+  .forgot-password {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .forgot-password a {
+    color: #6200ea;
+  }
+  
+  /* Sign Up Link Styling */
+  .signup-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    margin-top: 20px;
+  }
+  
+  .signup-link button {
+    margin-left: 5px;
+  }
+  
+  /* Add some padding to mat-card-content */
+  mat-card-content {
+    padding: 20px;
+  }
+  
+  /* Add subtle hover effect to the sign-up button */
+  .signup-link button:hover {
+    background-color: #bb86fc;
+  }
+  
