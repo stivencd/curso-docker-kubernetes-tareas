@@ -323,7 +323,7 @@ Lista detallada de cada optimización:
 
 ```bash
 # Clonar repositorio
-git clone <tu-repo>
+git clone https://github.com/stivencd/curso-docker-kubernetes-tareas/tree/main
 
 # Redireccionar al directio
 cd docker-seguridad-clase5
