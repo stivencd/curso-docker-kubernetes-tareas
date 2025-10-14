@@ -194,8 +194,8 @@ Crea una tabla comparativa en tu README.md:
 | Métrica | Baseline | Optimizado | Mejora |
 |---------|----------|------------|--------|
 | Tamaño imagen | 1.13GB | 212MB | -81.68% |
-| Vulnerabilidades CRITICAL | - | 0 | -100% |
-| Vulnerabilidades HIGH | - | 0 | -75% |
+| Vulnerabilidades CRITICAL | 39 | 0 | -100% |
+| Vulnerabilidades HIGH | 420 | 0 | -100% |
 | Usuario | root | nodejs | ✓ |
 | Multi-stage | ✗ | ✓ | ✓ |
 | Health check | ✗ | ✓ | ✓ |
@@ -297,8 +297,8 @@ Lista detallada de cada optimización:
 | Métrica | Baseline | Optimizado | Mejora |
 |---------|----------|------------|--------|
 | Tamaño imagen | 1.13GB | 212MB | -81.68% |
-| Vulnerabilidades CRITICAL | - | 0 | -100% |
-| Vulnerabilidades HIGH | - | 0 | -75% |
+| Vulnerabilidades CRITICAL | 39 | 0 | -100% |
+| Vulnerabilidades HIGH | 420 | 0 | -100% |
 | Usuario | root | nodejs | ✓ |
 | Multi-stage | ✗ | ✓ | ✓ |
 | Health check | ✗ | ✓ | ✓ |
