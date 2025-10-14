@@ -8,6 +8,7 @@ const userRoutes = require('./src/routes/user');
 const productRoutes = require('./src/routes/product');
 const cartRoutes = require('./src/routes/cart');
 const cacheRoutes = require('./src/routes/cache');
+const healthRoutes = require('./src/routes/health');
 
 const app = express();
 app.use(cors());
@@ -18,7 +19,8 @@ app.use('/assets', express.static('assets'));
 app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/cart', cartRoutes);
-app.use('/api/cache', cacheRoutes)
+app.use('/api/cache', cacheRoutes);
+app.use('/api/health', healthRoutes);
 
 const PORT = process.env.APP_PORT || 3000;
 

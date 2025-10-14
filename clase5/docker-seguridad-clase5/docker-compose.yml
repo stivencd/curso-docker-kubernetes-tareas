@@ -1,0 +1,62 @@
+version: '3.0'
+
+services:
+    
+  backend:
+    image: backend:optimizado
+    container_name: backend
+    ports: 
+      - "3000:3000"
+    networks:
+      - app-network
+    environment:
+      - APP_PORT=3000
+      - NODE_ENV=production
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password123
+      - POSTGRES_DB=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_HOST=database
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    restart:  unless-stopped
+    volumes:
+      - ./assets:/usr/share/nginx/html #assets
+    depends_on:
+      database:
+        condition: service_healthy
+
+  redis:
+    image: redis:7-alpine
+    container_name: products-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+
+  database:
+    image: postgres:14.1-alpine
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password123
+    ports:
+      - 5432:5432
+    networks:
+      - app-network
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./database:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+ 
+    
+volumes:
+  db_data:
+networks:
+  app-network:
+    driver: bridge

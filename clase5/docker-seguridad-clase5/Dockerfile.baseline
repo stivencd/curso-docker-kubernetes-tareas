@@ -1,0 +1,25 @@
+# Base image
+FROM node:18
+
+# Set working directory
+WORKDIR /app
+
+# Copy dependency files first for better caching
+COPY package*.json ./
+
+RUN npm install 
+
+# Copy the rest of the source code
+COPY . .
+
+
+# Expose your dev server port
+EXPOSE 3000
+
+# Environment variables
+ENV NODE_ENV=production \
+    PORT=3000
+
+
+# Command: start in watch mode lswith nodemon
+CMD ["node", "server.js"]
