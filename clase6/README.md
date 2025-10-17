@@ -1,4 +1,4 @@
-# 🐳 Tarea 6 -Introducción a Kubernetes
+# ☸️ Tarea 6 -Introducción a Kubernetes
 
 **Curso:** Docker & Kubernetes - Clase 6.  <br>
 **Estudiante:** Stiven Castellon Duran
