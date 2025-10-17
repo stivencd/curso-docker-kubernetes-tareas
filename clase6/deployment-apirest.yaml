@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apirest-deployment
+  namespace: tarea-clase6
+  labels:
+    app: apirest
+    env: homework
+    version: "1.0"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: apirest
+  template:
+    metadata:
+      labels:
+        app: apirest
+        env: homework
+    spec:
+      containers:
+      - name: apirest
+        image: stivid007/python-api-rest:1.0
+        ports:
+        - containerPort: 5000
+          name: http
+        env:
+        - name: APP_PORT
+          value: "5000"
+        - name: FLASK_ENV
+          value: "production"

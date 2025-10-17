@@ -142,6 +142,17 @@ REVISION  CHANGE-CAUSE
 
 Bonus 3: Usar tu propia imagen 
 
+```bash
+#pasos
+kubectl apply -f namespace.yaml
+kubectl apply -f deployment-apirest.yaml
+kubectl apply -f service-apirest.yaml
+kubectl port-forward svc/apirest-service 5000:80 -n tarea-clase6
+```
+![alt text](screenshots/bonus-apirest.png)
+
+![alt text](screenshots/bonus-apirest-status.png)
+
 # Limpieza
 Al terminar de trabajar en la tarea:
 # Eliminar recursos
