@@ -15,8 +15,8 @@ Descripcion: El proposito fue desplegar un ningnx en kubernetes de forma declara
 
 1. Clonar:
    ```bash
-   git clone https://github.com/tu-usuario/tu-repo.git
-   cd tu-repo
+  https://github.com/stivencd/curso-docker-kubernetes-tareas
+   cd clase6
 
 2. Desplegar:
 
