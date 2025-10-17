@@ -12,15 +12,12 @@ Descripcion: El proposito fue desplegar un ningnx en kubernetes de forma declara
 - **Réplicas:** 3
 
 ## Ejecución
-
 1. Clonar:
-   ```bash
+```bash
   https://github.com/stivencd/curso-docker-kubernetes-tareas
-  
    cd clase6
-
+```
 2. Desplegar:
-
 ```bash
 kubectl apply -f deployment.yaml
 kubectl apply -f service.yaml
