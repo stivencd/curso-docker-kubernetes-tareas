@@ -11,8 +11,8 @@ Repositorio de tareas del curso **Docker & Kubernetes**.
 3. **[Docker avanzado y Docker Compose](https://github.com/stivencd/curso-docker-kubernetes-tareas/tree/main/clase3#readme)**
 4. **[Microservicios, Cache y Gateway](https://github.com/stivencd/curso-docker-kubernetes-tareas/blob/main/clase4/mi-microservicio/README.md)**
 5. **[Seguridad en imágenes y escaneo de vulnerabilidades](https://github.com/stivencd/curso-docker-kubernetes-tareas/blob/main/clase5/docker-seguridad-clase5/README.md)**
-6. Arquitectura de Kubernetes
-7. Pods, Deployments y Services
+6. **[Introducción a Kubernetes]()**
+7. **[Configuración y Networking]()**
 8. ConfigMaps, Secrets y Probes
 9. Escalado automático (HPA) e Ingress
 10. Observabilidad (logs, métricas, Prometheus/Grafana)
