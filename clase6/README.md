@@ -1,10 +1,9 @@
-# Nombre de tu Aplicación
+# 🐳 Tarea 6 -Introducción a Kubernetes
 
-**Curso:** Docker & Kubernetes - Clase 6
+**Curso:** Docker & Kubernetes - Clase 6.  <br>
 **Estudiante:** Stiven Castellon Duran
 
-Breve descripción (1-2 líneas) de qué hace.
-
+Descripcion: El proposito fue desplegar un ningnx en kubernetes de forma declarativa,  a traves de un deployment y un service, se valido el estado del pod, se expuso el pod para acceder desde la maquina local y se libero el pod al finalizar la prueba.
 
 ## Stack
 
