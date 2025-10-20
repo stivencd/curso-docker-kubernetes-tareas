@@ -13,9 +13,7 @@ Repositorio de tareas del curso **Docker & Kubernetes**.
 5. **[Seguridad en imágenes y escaneo de vulnerabilidades](https://github.com/stivencd/curso-docker-kubernetes-tareas/blob/main/clase5/docker-seguridad-clase5/README.md)**
 6. **[Introducción a Kubernetes](https://github.com/stivencd/curso-docker-kubernetes-tareas/blob/main/clase6/README.md)**
 7. **[Configuración y Networking](https://github.com/stivencd/curso-docker-kubernetes-tareas/blob/main/clase7/README.md)**
-8. ConfigMaps, Secrets y Probes
-9. Escalado automático (HPA) e Ingress
-10. Observabilidad (logs, métricas, Prometheus/Grafana)
+8. **[Ingress, Health Probes y Escalado Automático](https://github.com/stivencd/curso-docker-kubernetes-tareas/blob/main/clase8/README.md)**
 
 
 
