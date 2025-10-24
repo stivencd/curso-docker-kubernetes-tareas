@@ -6,7 +6,7 @@ metadata:
   labels:
     app: frontend
     tier: presentation
-    version: v2.0
+    version: v2.2
 spec:
   replicas: 2
   selector:
@@ -17,11 +17,11 @@ spec:
       labels:
         app: frontend
         tier: presentation
-        version: v2.0
+        version: v2.2
     spec:
       containers:
       - name: frontend
-        image: localhost:32000/angular-frontend:v2.0
+        image: localhost:32000/angular-frontend:v2.2
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80

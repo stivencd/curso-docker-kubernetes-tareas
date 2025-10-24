@@ -31,11 +31,14 @@ export class AppComponent implements OnInit {
     nombre: '',
     email: ''
   };
+  
+  systemInfo: any = null;
 
   // API URL - Usa ruta relativa, nginx BFF proxy maneja el routing al backend
   // Docker Compose: nginx proxy → Kong Gateway → Spring Boot
   // Kubernetes: nginx proxy → api-service (DNS interno) → Spring Boot
   private apiUrl = '/api/users';
+
 
   constructor(private http: HttpClient) {
     this.detectEnvironment();
@@ -128,5 +131,19 @@ export class AppComponent implements OnInit {
   clearMessages(): void {
     this.error = null;
     this.success = null;
+  }
+
+  getSystemInfo(): void {
+    this.http.get('/api/student/info').subscribe({
+      next: (data: any) => {
+        this.systemInfo = data;
+        this.success = 'Información del sistema cargada';
+        setTimeout(() => this.success = null, 3000);
+      },
+      error: (err: any) => {
+        this.error = 'Error al obtener información del sistema';
+        console.error('Error:', err);
+      }
+    });
   }
 }

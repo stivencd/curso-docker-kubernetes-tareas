@@ -96,3 +96,37 @@ Captura del CURL al nuevo endopoint, se cambio la ruta porque ya existia uno def
 ![api_info response](screenshots/parte2-appinfo-response.png)
 
 ## Parte 3: Iteración v2.2 - Modificar Frontend
+
+3.1 Modificar Frontend Angular
+
+Modificando en el HTML: frontend/src/app/app.component.html
+
+![html](screenshots/parte3-frontend-html-updated.png)
+
+Modificando en el typescript: frontend/src/app/app.component.ts
+
+![ts](screenshots/parte3-frontend-typescript-updated.png)
+
+Los links de las images se encuentran en microk8s registry local
+
+```bash
+curl http://localhost:32000/v2/angular-frontend/tags/list
+{"name":"angular-frontend","tags":["v2.2","v2.0"]}
+```
+![docker url images](screenshots/parte3-url-images.png)
+
+Captura de los pods actualizando durante el rollout
+
+![get pods](screenshots/parte3-get-pods-w.png)
+
+Captura del rollout status
+
+![rollout status](screenshots/parte3-frontend-rollout-status.png)
+
+Captura del nuevo boton agregado en el frontend
+
+![browser](screenshots/parte3-browser.png)
+
+Exponiendo los puertos con metalLB
+
+![expose metalLB](screenshots/parte3-expose-ports.png)
