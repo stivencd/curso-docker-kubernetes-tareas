@@ -130,3 +130,91 @@ Captura del nuevo boton agregado en el frontend
 Exponiendo los puertos con metalLB
 
 ![expose metalLB](screenshots/parte3-expose-ports.png)
+
+
+## Parte 4: Gestión de Versiones con Rollout
+
+### Objetivo
+Aprender a gestionar versiones de deployments usando comandos de rollout (rollback, rollforward, historial).
+
+#### 4.1 Ver Historial de Rollouts
+
+```bash
+# Ver historial del backend
+kubectl rollout history deployment/api -n proyecto-integrador
+```
+![backend rollout history](screenshots/parte4-backend-rollout-history.png)
+
+```bash
+# Ver historial del frontend
+kubectl rollout history deployment/frontend -n proyecto-integrador
+```
+
+![frontend rollout history](screenshots/parte4-frontend-rollout-history.png)
+
+
+#### 4.2 Hacer Rollback a Versión Anterior
+
+```bash
+# Rollback del backend a v2.0
+kubectl rollout undo deployment/api -n proyecto-integrador
+```
+
+![rollout undo process](screenshots/parte4-rollout-undo-process.png)
+
+```bash
+# Ver el proceso
+kubectl rollout status deployment/api -n proyecto-integrador
+```
+
+![rollout undo status](screenshots/parte4-rollout-undo-status.png)
+
+```bash
+# Verificar que el endpoint /api/student/info ya NO existe
+http://172.30.197.191:8080/api/student/info
+# Debería dar error 404
+```
+
+![rollout undo validate](screenshots/parte4-rollout-undo-validate.png)
+
+```bash
+# Verificar
+curl http://172.30.197.191:8080/api/student/info
+# Debería dar error 404
+```
+
+![alt text](screenshots/parte4-rollout-undo-curl.png)
+
+#### 4.3 Volver a la Versión v2.1 (Rollforward).
+
+```bash
+# Ver historial actualizado
+kubectl rollout history deployment/api -n proyecto-integrador
+```
+
+![rollout history updated](screenshots/parte4-rollout-history-updated.png)
+
+```bash
+# Rollback a la revisión 2 (que es v2.1)
+kubectl rollout undo deployment/api --to-revision=5 -n proyecto-integrador
+```
+![rollout undo to v2.1](screenshots/parte4-rollout-undo-to-v2.1.png)
+
+![rollout undo completed](screenshots/parte4-rollout-undo-to-v2.1-completed.png)
+
+```bash
+# Verificar
+curl http://172.30.197.191:8080/api/student/info
+# Debería funcionar nuevamente
+```
+![rollout undo to v2.1 curl](screenshots/parte4-rollout-undo-to-v2.1-curl.png)
+
+![rollout undo to v2.1 browser](screenshots/parte4-rollout-undo-to-v4.2-browser.png)
+
+#### Explicación en tus propias palabras: ¿Qué hace `kubectl rollout undo`?
+
+Rollout permite hacer un rollback de un deployment actual a uno anterior, es como deshacer los utlimos cambios realizados 
+
+---
+
+## Parte 5: Acceso Externo via Ingress + MetalLB 
