@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: alefiengo/angular-frontend:v2.0
+        image: localhost:32000/angular-frontend:v2.0
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80

@@ -40,6 +40,7 @@ public class GreetingController {
         return response;
     }
 
+
     private long getUptime() {
         return java.lang.management.ManagementFactory.getRuntimeMXBean().getUptime() / 1000;
     }
