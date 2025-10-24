@@ -2,6 +2,7 @@ package dev.alefiengo.api.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -38,6 +39,17 @@ public class GreetingController {
         response.put("java_version", System.getProperty("java.version"));
         response.put("uptime_seconds", getUptime());
         return response;
+    }
+
+    @GetMapping("/api/student/info")
+    public ResponseEntity<Map<String, Object>> getInfo() {
+        Map<String, Object> info = new HashMap<>();
+        info.put("alumno", "STIVEN CASTELLON DURAN");
+        info.put("version", "v2.1");
+        info.put("curso", "Docker & Kubernetes - i-Quattro");
+        info.put("timestamp", LocalDateTime.now().toString());
+        info.put("hostname", System.getenv("HOSTNAME"));
+        return ResponseEntity.ok(info);
     }
 
 
