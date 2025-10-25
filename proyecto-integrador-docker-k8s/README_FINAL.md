@@ -8,6 +8,7 @@
 - Backend v2.1: https://hub.docker.com/r/tu-usuario/springboot-api/tags
 - Frontend v2.2: https://hub.docker.com/r/tu-usuario/angular-frontend/tags
 
+## Parte 1: Setup del Ambiente
 
 **Ambiente utilizado:**
    - VirutalBox 
@@ -35,16 +36,27 @@
  | /2            | usb2      | bus        | USB/IP Virtual Host Controller       |
  | /3            | eth0      | network    | Ethernet interface                   |
 
+#### 1.2 Instalar microk8s
+
    - Rango MetalLB:
 ```bash
 microk8s kubectl get ipaddresspool default-addresspool -n metallb-system -o jsonpath='{.spec.addresses[0]}'
 172.30.197.190-172.30.197.200
 ```
 
-   ### Screenshots
-   ![microk8s status](screenshots/parte1-microk8s-status.png)
+```bash
+microk8s status
+```
+   ![microk8s status](screenshots/parte1-1-2-microk8s-status.png)
    
-   ![Pods running](screenshots/parte1-pods-running.png)
+```bash
+microk8s kubectl get pods -A
+```
+   ![Pods running](screenshots/parte1-1-2-pods-running.png)
+
+#### 1.3 Habilitar Addons
+
+![microk8s addons enabled](screenshots/parte1-1-3-addons-enabled.png)
 
 
 Exponiendo la IPAddress del frontend a traves de MetalLB
@@ -52,9 +64,9 @@ Exponiendo la IPAddress del frontend a traves de MetalLB
 microk8s kubectl expose deployment frontend --port=80 --target-port=80 --type=LoadBalancer -n proyecto-integrador
 ```
 Resultado:
-![Frontend expose](screenshots/parte1-metallb-expose-frontend.png)
+![Frontend expose](screenshots/parte1-1-3-metallb-expose-frontend.png)
 
-![Frontend via MetalLB](screenshots/parte1-frontend-browser.png)
+![Frontend via MetalLB](screenshots/parte1-1-3-frontend-browser.png)
 
 Exponiendo la IPAddress del backend a traves de MetalLB
 
@@ -62,50 +74,85 @@ Exponiendo la IPAddress del backend a traves de MetalLB
 microk8s kubectl expose deployment api --port=8080 --target-port=8080 --type=LoadBalancer -n proyecto-integrador
 ```
 Resultado:
-![Backend via MetalLB](screenshots/parte1-metallb-expose-backend.png)
+![Backend via MetalLB](screenshots/parte1-1-3-metallb-expose-backend.png)
 
-![Backend api](screenshots/parte1-api-backend.png)
+![Backend api](screenshots/parte1-1-3-api-backend.png)
+
+
+#### 1.4 Instalar Git y Docker
+Instalando Docker/git
+
+![docker version](screenshots/parte1-1-4-git-docker-version.png)
 
 ---
 
 ## Parte 2: Iteración v2.1 
+
 ### Objetivo
 Agregar un nuevo endpoint en el backend, versionar la imagen como v2.1, publicarla en tu Docker Hub y actualizar el deployment.
 
-Captura del codigo agregado:
+#### 2.1 Agregar Nuevo Endpoint
 
-![Greeting code added](screenshots/parte2-code-added.png)
+Captura del nuevo enpoint agregado:
 
-Captura de las images creadas con el tag: v2.1
-![docker images](screenshots/parte2-docker-images.png)
+![endpoint added](screenshots/parte2-2-1-enpoint-added.png)
+
+#### 2.2 Build Imagen Docker v2.1
+
+Captura de las images creadas con el tag: v2.1:
+
+![docker images](screenshots/parte2-2-2-docker-images.png)
+
+```bash
+# Verificar imagen
+docker images | grep springboot-api
+```
+![docker images api](screenshots/parte2-2-2-docker-images-api.png)
+
+#### 2.3 Push a Microk8s registry
 
 Las images fueron creadas en microk8s registry
 
-![Url images](screenshots/parte2-url-images.png)
+![Url images](screenshots/parte2-2-3-url-images.png)
 
-Estado del rollout aplicado al deployment
+#### 2.4 Actualizar Deployment de Kubernetes
 
-![rollout deployment](screenshots/parte2-rollout-status-deployement.png)
+![upgrade-api-version](screenshots/parte2-2-4-upgrade-api-version.png)
+
+#### 2.5 Aplicar Cambios
+Estado del rollout aplicado al deployment:
+
+![rollout deployment](screenshots/parte2-2-5-rollout-status-deployement.png)
+
+Describe del pod:
+
+![upgrade pod](screenshots/parte2-2-5-upgrade-pod.png)
 
 Verificando los Pods
 
-![kubectl get pods](screenshots/parte2-get-pods.png)
+![kubectl get pods](screenshots/parte2-2-5-get-pods.png)
 
 Captura del CURL al nuevo endopoint, se cambio la ruta porque ya existia uno definido en el codigo, para evitar error de ambiguedad al iniciar la aplicacion se cambio el endpoint
 
-![api_info response](screenshots/parte2-appinfo-response.png)
+#### 2.6 Verificar Funcionamiento
 
-## Parte 3: Iteración v2.2 - Modificar Frontend
+![api_info response](screenshots/parte2-2-6-appinfo-response.png)
 
-3.1 Modificar Frontend Angular
+---
+
+## Parte 3: Iteración v2.2 - 
+
+#### 3.1 Modificar Frontend Angular
 
 Modificando en el HTML: frontend/src/app/app.component.html
 
-![html](screenshots/parte3-frontend-html-updated.png)
+![html](screenshots/parte3-3-1-frontend-html-updated.png)
 
 Modificando en el typescript: frontend/src/app/app.component.ts
 
-![ts](screenshots/parte3-frontend-typescript-updated.png)
+![ts](screenshots/parte3-3-1-frontend-typescript-updated.png)
+
+#### 3.2 Build Imagen Frontend v2.2
 
 Los links de las images se encuentran en microk8s registry local
 
@@ -113,23 +160,32 @@ Los links de las images se encuentran en microk8s registry local
 curl http://localhost:32000/v2/angular-frontend/tags/list
 {"name":"angular-frontend","tags":["v2.2","v2.0"]}
 ```
-![docker url images](screenshots/parte3-url-images.png)
+![docker url images](screenshots/parte3-3-2-url-images.png)
+
+#### 3.3 Actualizar Deployment
+
+![update deployment yaml](screenshots/parte3-3-3-update-deployment-yaml.png)
+
+#### 3.4 Aplicar Cambios
 
 Captura de los pods actualizando durante el rollout
 
-![get pods](screenshots/parte3-get-pods-w.png)
+![get pods](screenshots/parte3-3-4-get-pods-w.png)
 
 Captura del rollout status
 
-![rollout status](screenshots/parte3-frontend-rollout-status.png)
+![rollout status](screenshots/parte3-3-4-frontend-rollout-status.png)
 
-Captura del nuevo boton agregado en el frontend
 
-![browser](screenshots/parte3-browser.png)
+#### 3.5 Verificar Funcionamiento
 
-Exponiendo los puertos con metalLB
+Captura del nuevo boton agregado en el frontend:
 
-![expose metalLB](screenshots/parte3-expose-ports.png)
+![browser](screenshots/parte3-3-5-browser.png)
+
+Exponiendo los puertos con metalLB:
+
+![expose metalLB](screenshots/parte3-3-5-expose-ports.png)
 
 
 ## Parte 4: Gestión de Versiones con Rollout
@@ -143,14 +199,14 @@ Aprender a gestionar versiones de deployments usando comandos de rollout (rollba
 # Ver historial del backend
 kubectl rollout history deployment/api -n proyecto-integrador
 ```
-![backend rollout history](screenshots/parte4-backend-rollout-history.png)
+![backend rollout history](screenshots/parte4-4-1-backend-rollout-history.png)
 
 ```bash
 # Ver historial del frontend
 kubectl rollout history deployment/frontend -n proyecto-integrador
 ```
 
-![frontend rollout history](screenshots/parte4-frontend-rollout-history.png)
+![frontend rollout history](screenshots/parte4-4-1-frontend-rollout-history.png)
 
 
 #### 4.2 Hacer Rollback a Versión Anterior
@@ -160,14 +216,14 @@ kubectl rollout history deployment/frontend -n proyecto-integrador
 kubectl rollout undo deployment/api -n proyecto-integrador
 ```
 
-![rollout undo process](screenshots/parte4-rollout-undo-process.png)
+![rollout undo process](screenshots/parte4-4-2-rollout-undo-process.png)
 
 ```bash
 # Ver el proceso
 kubectl rollout status deployment/api -n proyecto-integrador
 ```
 
-![rollout undo status](screenshots/parte4-rollout-undo-status.png)
+![rollout undo status](screenshots/parte4-4-2-rollout-undo-status.png)
 
 ```bash
 # Verificar que el endpoint /api/student/info ya NO existe
@@ -175,7 +231,7 @@ http://172.30.197.191:8080/api/student/info
 # Debería dar error 404
 ```
 
-![rollout undo validate](screenshots/parte4-rollout-undo-validate.png)
+![rollout undo validate](screenshots/parte4-4-2-rollout-undo-validate.png)
 
 ```bash
 # Verificar
@@ -183,7 +239,7 @@ curl http://172.30.197.191:8080/api/student/info
 # Debería dar error 404
 ```
 
-![alt text](screenshots/parte4-rollout-undo-curl.png)
+![alt text](screenshots/parte4-4-2-rollout-undo-curl.png)
 
 #### 4.3 Volver a la Versión v2.1 (Rollforward).
 
@@ -192,24 +248,24 @@ curl http://172.30.197.191:8080/api/student/info
 kubectl rollout history deployment/api -n proyecto-integrador
 ```
 
-![rollout history updated](screenshots/parte4-rollout-history-updated.png)
+![rollout history updated](screenshots/parte4-4-3-rollout-history-updated.png)
 
 ```bash
 # Rollback a la revisión 2 (que es v2.1)
 kubectl rollout undo deployment/api --to-revision=5 -n proyecto-integrador
 ```
-![rollout undo to v2.1](screenshots/parte4-rollout-undo-to-v2.1.png)
+![rollout undo to v2.1](screenshots/parte4-4-3-rollout-undo-to-v2.1.png)
 
-![rollout undo completed](screenshots/parte4-rollout-undo-to-v2.1-completed.png)
+![rollout undo completed](screenshots/parte4-4-3-rollout-undo-to-v2.1-completed.png)
 
 ```bash
 # Verificar
 curl http://172.30.197.191:8080/api/student/info
 # Debería funcionar nuevamente
 ```
-![rollout undo to v2.1 curl](screenshots/parte4-rollout-undo-to-v2.1-curl.png)
+![rollout undo to v2.1 curl](screenshots/parte4-4-3-rollout-undo-to-v2.1-curl.png)
 
-![rollout undo to v2.1 browser](screenshots/parte4-rollout-undo-to-v4.2-browser.png)
+![rollout undo to v2.1 browser](screenshots/parte4-4-3-rollout-undo-to-v4.2-browser.png)
 
 #### Explicación en tus propias palabras: ¿Qué hace `kubectl rollout undo`?
 
