@@ -1,12 +1,14 @@
   # Proyecto Final - Docker & Kubernetes
 
    **Alumno:** Stiven Castellon Duran <br>
-   **Fecha:** 22/10/2025 <br>
+   **Fecha de entrega:** 25/10/2025 <br>
    **Curso:** Docker & Kubernetes - i-Quattro <br>
 
 ## Links de Docker Hub
-- Backend v2.1: https://hub.docker.com/r/tu-usuario/springboot-api/tags
-- Frontend v2.2: https://hub.docker.com/r/tu-usuario/angular-frontend/tags
+- Backend v2.1: https://hub.docker.com/repository/docker/stivid007/springboot-api/tags
+- Frontend v2.2: https://hub.docker.com/repository/docker/stivid007/angular-frontend/tags
+
+Nota: Para el proyecto integrador se utilizo microk8s registry
 
 ## Parte 1: Setup del Ambiente
 
@@ -345,3 +347,111 @@ curl http://172.30.197.191:8080/actuator/health
 ```
 
 ![curl actuator](screenshots/parte5-5-3-curl-actuator.png)
+
+### Puntos Extra
+
+- **Validar HPA (Horizontal Pod Autoscaler)** (+5%)
+  - Generar carga desde un pod busybox: `kubectl run -i --tty load-generator --rm --image=busybox --restart=Never -n proyecto-integrador -- /bin/sh -c "while true; do wget -q -O- http://api-service:8080/api/users; done"`
+  - En otra terminal, observar: `kubectl get hpa -n proyecto-integrador -w`
+```bash
+microk8s kubectl get hpa -n proyecto-integrador -w
+NAME      REFERENCE        TARGETS                         MINPODS   MAXPODS   REPLICAS   AGE
+api-hpa   Deployment/api   cpu: 47%/70%, memory: 53%/80%   2         5         2          47h
+api-hpa   Deployment/api   cpu: 190%/70%, memory: 55%/80%   2         5         2          47h
+api-hpa   Deployment/api   cpu: 199%/70%, memory: 57%/80%   2         5         4          47h
+api-hpa   Deployment/api   cpu: 161%/70%, memory: 33%/80%   2         5         4          47h
+api-hpa   Deployment/api   cpu: 173%/70%, memory: 34%/80%   2         5         5          47h
+api-hpa   Deployment/api   cpu: 143%/70%, memory: 31%/80%   2         5         5          47h
+api-hpa   Deployment/api   cpu: 133%/70%, memory: 34%/80%   2         5         5          47h
+api-hpa   Deployment/api   cpu: 138%/70%, memory: 35%/80%   2         5         5          47h
+api-hpa   Deployment/api   cpu: 135%/70%, memory: 36%/80%   2         5         5          47h
+api-hpa   Deployment/api   cpu: 128%/70%, memory: 41%/80%   2         5         5          47h
+api-hpa   Deployment/api   cpu: 162%/70%, memory: 42%/80%   2         5         5          47h
+api-hpa   Deployment/api   cpu: 104%/70%, memory: 44%/80%   2         5         5          47h
+```
+
+  - Screenshot de HPA mostrando el incremento de CPU y replicas
+
+El incremento esta superior al > 70% en CPU
+  ![pextra kubectl get hpa](screenshots/puntoextra-1-kubectl-get-hpa.png)
+
+
+  - Screenshot de `kubectl get pods -n proyecto-integrador` mostrando los pods adicionales creados
+
+   Se adiciono un total de 5 pods para el backend
+
+  ![kubectl get pods](screenshots/puntoextra-1-kubectl-get-pods.png)
+
+  - Documentar el proceso: estado inicial → generar carga → observar escalado → detener carga (Ctrl+C) → observar scale down
+
+  1.- Estado inicial: se pudo observar que el consumo de CPU estaba por debajo de los limites y las replicas de pods como minimo 2.
+
+  2.- Con la generacion de carga: se pudo observar que el consumo de CPU era superio a los 70% el cual llego a un total de 5 replicas para el backend.
+
+  3.- Scale Down: Despues de detener la prueba de carga se pudo observar que despues de los 5minutos las replicas fueron terminando hasta llegar a 2 replicas.
+
+![scale down](screenshots/puntoextra-1-scale-down.png)
+
+![sclae down](screenshots/puntoextra-1-kubectl-get-pods-scaledown.png)
+
+
+- **Validar Health Probes** (+3%)
+  - Forzar fallo del backend (kill process dentro del pod)
+  Se ejecutara el comando para ocasionar el reinicio del pod:
+
+  ```bash
+  microk8s kubectl exec -it api-66dd87bbdd-9ntfw -n proyecto-integrador -- kill 1
+  ```
+  - Screenshot de Kubernetes reiniciando el pod automáticamente
+  
+  El pod se reiniciará automáticamente:
+  ![kubectl get pods](screenshots/puntoextra-2-kubectl-get-pods.png)
+
+  Revisando eventos en terminal:
+  ![events](screenshots/puntosextra-2-events.png)
+
+  ```bash
+  microk8s kubectl describe pod api-66dd87bbdd-9ntfw -n proyecto-integrador  | grep -A5 "liveness"
+  ```
+  ![alt text](screenshots/puntosextra-2-liveness.png)
+
+  - Explicar cómo liveness probe detectó el fallo
+
+  Al ocasionar un fallo en el pod, kubernetes intenta reiniciar el pod intentando validar el liveness/readiness despues de 60 segundos de tiempo para iniciar, el pod nunca llega a READY
+
+  El pod se reinicia automáticamente hasta esta en Ready nuevamente:
+  ![ready](screenshots/puntosextra-2-ready.png)
+
+
+- **Persistencia de Datos** (+2%)
+  - Eliminar el pod de PostgreSQL
+  Ejecutar el comando para eliminar el pod de PostgreSQL
+  ```bash
+  microk8s kubectl delete pod postgres-0 -n proyecto-integrador
+  ```
+
+    - Verificar que los datos persisten cuando se recrea
+
+  El pod se recreaa nuevamente:
+  ![delete pod](screenshots/puntosextra-3-delete-pod.png)
+
+  Validar el PVC(Peristence Volume Claim) con el comando:
+    ```bash
+    kubectl get pvc  -n proyecto-integrador
+    ```
+
+    ![pvc](screenshots/puntosextra-3-pvc.png)
+
+  - Screenshot del proceso
+
+  Validar persistencia ejecutando el comando:
+
+  ```bash
+  microk8s kubectl exec -it postgres-0 -n proyecto-integrador -- bash 
+
+  postgres-0:/$ psql -U curso -d apidb
+
+  ```
+![postgres persistence](screenshots/parte-3-persistence.png)
+
+---
