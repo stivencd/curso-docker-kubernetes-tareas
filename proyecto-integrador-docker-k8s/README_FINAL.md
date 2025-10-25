@@ -218,3 +218,74 @@ Rollout permite hacer un rollback de un deployment actual a uno anterior, es com
 ---
 
 ## Parte 5: Acceso Externo via Ingress + MetalLB 
+
+### Objetivo
+Verificar que el acceso externo funciona correctamente sin necesidad de port-forward, simulando un entorno cloud real.
+
+
+#### 5.1 Verificar Configuración de Ingress
+
+```bash
+# Ver configuración del Ingress
+kubectl get ingress -n proyecto-integrador
+```
+![kubectl get ingress](screenshots/parte5-5-1-kubectl-get-ingress.png)
+
+```bash
+# Ver detalles
+kubectl describe ingress app-ingress -n proyecto-integrador
+```
+
+![kubectl describe ingress](screenshots/parte5-5-1-kubectl-describe-ingress.png)
+
+#### 5.2 Verificar MetalLB
+
+```bash
+# Ver servicios de MetalLB
+kubectl get svc -n proyecto-integrador
+```
+![kubectl get svc](screenshots/parte5-5-2-kubectl-get-svc.png)
+
+```bash
+# Ver configuración de MetalLB
+kubectl get ipaddresspool -n metallb-system
+```
+
+![kubectl get ipaddresspool](screenshots/parte5-5-2-kubectl-get-ipaddresspool.png)
+
+#### 5.3 Probar TODOS los Endpoints via IP Externa
+
+Desde el navegador o curl, probar:
+
+```bash
+# Frontend
+curl http://172.30.197.190/
+```
+
+![curl frontend](screenshots/parte5-5-3-curl-frontend.png)
+
+```bash
+# API Users
+curl http://172.30.197.191:8080/api/users
+```
+![curl api](screenshots/parte5-5-3-curl-api-users.png)
+
+```bash
+# API Greeting
+curl http:///172.30.197.191:8080/api/greeting
+```
+![curl api greeting](screenshots/parte5-5-3-curl-api-greeting.png)
+
+```bash
+# API Info (nuevo)
+curl http://172.30.197.191:8080/api/student/info
+```
+
+![curl api info nuevo](screenshots/parte5-5-3-curl-api-info-nuevo.png)
+
+```bash
+# Actuator Health
+curl http://172.30.197.191:8080/actuator/health
+```
+
+![curl actuator](screenshots/parte5-5-3-curl-actuator.png)
