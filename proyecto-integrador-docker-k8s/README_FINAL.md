@@ -17,6 +17,7 @@ Nota: Para el proyecto integrador se utilizo microk8s registry
    - Nombre de VM/Instancia: [stiven-castellon-k8s]
    - Sistema operativo: Ubuntu 24.04.3 LTS (Noble Numbat)
    - Recursos:
+ _____________________________________________________________________________
  | H/W path     | Device   | Class      | Description                          |
  |---------------|-----------|------------|--------------------------------------|
  |               |           | system     | Computer                             |
