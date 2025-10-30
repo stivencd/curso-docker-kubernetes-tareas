@@ -177,6 +177,11 @@ Captura de los pods actualizando durante el rollout
 
 Captura del rollout status
 
+```bash
+# comando a ejecutar
+microk8s kubectl rollout status deployment/frontend -n proyecto-integrador 
+```
+
 ![rollout status](screenshots/parte3-3-4-frontend-rollout-status.png)
 
 
